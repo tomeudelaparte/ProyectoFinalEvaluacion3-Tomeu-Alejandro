@@ -8,9 +8,11 @@ public class PlayerController : MonoBehaviour
     public float impulse = 5F;
     public float groundDistance = 2f;
     public float speedRotation = 10f;
-    
-    private GameObject focalPoint;
     public float velocityMax = 100f;
+
+    public float mouseSensitivity = 100f;
+
+    private GameObject focalPoint;
     private float horizontalInput, verticalInput;
     private Rigidbody playerRigidbody;
     // Start is called before the first frame update
@@ -39,13 +41,10 @@ public class PlayerController : MonoBehaviour
         
         verticalInput = Input.GetAxis("Vertical");
 
-        playerRigidbody.AddForce(focalPoint.transform.forward * speed * verticalInput,ForceMode.VelocityChange);
-        // playerRigidbody.AddForce(Vector3.forward * verticalInput * speed);
+        playerRigidbody.AddForce(focalPoint.transform.forward * speed * verticalInput,ForceMode.Force);
 
-        playerRigidbody.AddForce(Vector3.right * horizontalInput * speed);
-       
-        transform.Rotate(Vector3.up * speedRotation * horizontalInput);
-        
+        playerRigidbody.AddForce(focalPoint.transform.right * horizontalInput * speed);
+               
         if (playerRigidbody.velocity.magnitude > velocityMax)
         {
             playerRigidbody.velocity = playerRigidbody.velocity.normalized * velocityMax;
@@ -56,9 +55,9 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hitData;
 
-        Ray ray = new Ray(transform.position, -transform.up);
+        Ray ray = new Ray(transform.position, Vector3.down);
 
-        Debug.DrawRay(transform.position, -transform.up * groundDistance, Color.cyan);
+        
 
         if (Physics.Raycast(ray, out hitData, groundDistance))
         {
