@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
         focalPoint = GameObject.Find("FocalPoint");
         Physics.gravity *= 2;
-        
+        playerRigidbody.velocity = focalPoint.transform.forward * 200f;
     }
 
     // Update is called once per frame
@@ -32,7 +32,8 @@ public class PlayerController : MonoBehaviour
         {
             playerRigidbody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
         }
-        
+
+     
     }
 
     private void FixedUpdate()
