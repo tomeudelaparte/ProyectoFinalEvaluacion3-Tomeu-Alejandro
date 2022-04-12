@@ -5,9 +5,11 @@ using UnityEngine;
 public class sprite : MonoBehaviour
 {
     private GameObject theCam;
+    private GameObject Player;
     // Start is called before the first frame update
     void Start()
     {
+        Player = GameObject.Find("Player");
         theCam = GameObject.Find("FocalPoint");
     }
 
@@ -15,6 +17,7 @@ public class sprite : MonoBehaviour
     void LateUpdate()
     {
         transform.LookAt(theCam.transform);
-        
+
+        transform.position = (Player.transform.position + Vector3.up * 3);
     }
 }
