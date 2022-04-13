@@ -10,18 +10,20 @@ public class PlayerController : MonoBehaviour
     public float groundDistance = 2f;
     public float speedRotation = 10f;
     public float velocityMax = 100f;
+    public float lastPosition;
 
     public float mouseSensitivity = 100f;
     private float spinspeed = 200f;
     private GameObject focalPoint;
     private float horizontalInput, verticalInput;
     private Rigidbody playerRigidbody;
-  
+    private float currentSpeed;
+    
     // Start is called before the first frame update
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
-
+        
         focalPoint = GameObject.Find("FocalPoint");
         Physics.gravity *= 2;
         //playerRigidbody.velocity = focalPoint.transform.forward * 200f;
@@ -38,6 +40,7 @@ public class PlayerController : MonoBehaviour
         //Boost en el aire
         if (Input.GetKeyDown(KeyCode.Space) && !IsOnGround())
         {
+            playerRigidbody.AddForce(Vector3.up * 10f, ForceMode.Impulse);
             playerRigidbody.velocity = focalPoint.transform.forward * 50f;
             
         }
@@ -77,8 +80,14 @@ public class PlayerController : MonoBehaviour
             playerRigidbody.velocity = playerRigidbody.velocity.normalized * velocityMax;
         }
     }
-
-   
+/*
+   private void CurrentSpeed()
+    {
+        
+        currentSpeed = (transform.position - lastPosition).magnitude / Time.deltaTime;
+        lastPosition = transform.position;
+    }
+    */
     private bool IsOnGround()
     {
         RaycastHit hitData;

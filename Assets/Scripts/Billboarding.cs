@@ -5,6 +5,7 @@ using UnityEngine;
 public class Billboarding : MonoBehaviour
 {
     private GameObject theCam;
+    public bool useStaticBillboard;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +15,15 @@ public class Billboarding : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.LookAt(theCam.transform);
+        if (!useStaticBillboard)
+        {
+            transform.LookAt(theCam.transform);
+        } 
+        else
+        {
+            transform.rotation = theCam.transform.rotation;
+        }
+
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
     }
 }
