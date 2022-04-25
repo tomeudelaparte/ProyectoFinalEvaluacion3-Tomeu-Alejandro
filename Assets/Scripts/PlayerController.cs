@@ -33,35 +33,42 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Jump 
-        if (Input.GetKeyDown(KeyCode.Space) && IsOnGround())
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            playerRigidbody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
+            if (IsOnGround())
+            {
+                // JUMP
+                playerRigidbody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
+
+            } else
+            {
+                //Boost en el aire
+                playerRigidbody.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+                playerRigidbody.velocity = focalPoint.transform.forward * 50f;
+            }
+
         }
-        //Boost en el aire
-        if (Input.GetKeyDown(KeyCode.Space) && !IsOnGround())
-        {
-            playerRigidbody.AddForce(Vector3.up * 10f, ForceMode.Impulse);
-            playerRigidbody.velocity = focalPoint.transform.forward * 50f;
-            
-        }
-         //Spindash
-         //Rotar sobre si mismo
+        
+
          if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            
+            //Spindash
             transform.Rotate(Vector3.left * spinspeed * Time.deltaTime);
-        }
-         //Sale disparado hacia adelante respecto a la camara
-        if (Input.GetKeyUp(KeyCode.Mouse0) && IsOnGround())
-        {
-            playerRigidbody.velocity = focalPoint.transform.forward * 100f;
-            
-        }
-        //ground pound
-      if (Input.GetKeyUp(KeyCode.Mouse0) && !IsOnGround())
-        {
-            playerRigidbody.AddForce(Vector3.down * 100f, ForceMode.Impulse);
-         
+
+
+            if (IsOnGround())
+            {
+                //Sale disparado hacia adelante respecto a la camara
+                playerRigidbody.velocity = focalPoint.transform.forward * 100f;
+
+            }
+            else if (!IsOnGround())
+            {
+                //ground pound
+                playerRigidbody.AddForce(Vector3.down * 100f, ForceMode.Impulse);
+
+            }
+
         }
     }
 
