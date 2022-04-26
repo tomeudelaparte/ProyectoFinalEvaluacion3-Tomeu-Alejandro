@@ -49,20 +49,23 @@ public class PlayerController : MonoBehaviour
 
         }
         
-
-         if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyUp(KeyCode.Mouse0 ))
         {
-            //Spindash
-            transform.Rotate(Vector3.left * spinspeed * Time.deltaTime);
-
-
             if (IsOnGround())
             {
                 //Sale disparado hacia adelante respecto a la camara
                 playerRigidbody.velocity = focalPoint.transform.forward * 100f;
 
             }
-            else if (!IsOnGround())
+        }
+         if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            //Spindash
+            transform.Rotate(Vector3.left * spinspeed * Time.deltaTime);
+
+
+          
+            if (!IsOnGround())
             {
                 //ground pound
                 playerRigidbody.AddForce(Vector3.down * 100f, ForceMode.Impulse);
