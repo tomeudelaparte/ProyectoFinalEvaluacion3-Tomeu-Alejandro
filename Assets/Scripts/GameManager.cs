@@ -6,14 +6,15 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI timestamp, collectedPilas, totalPilas;
+    public GameObject pauseMenu;
+
+    private bool isPaused = false;
 
     private int totalItems;
     private int itemsCollected;
 
-    private float startTime;
     private float time, minutes, seconds, miliseconds;
 
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -27,10 +28,47 @@ public class GameManager : MonoBehaviour
         collectedPilas.text = itemsCollected.ToString();
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateTimer();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+    }
+
+    public void Pause()
+    {
+
+        if (!isPaused)
+        {
+            isPaused = true;
+
+            pauseMenu.SetActive(true);
+
+            Cursor.lockState = CursorLockMode.None;
+
+            Time.timeScale = 0;
+
+        }
+        else
+        {
+            isPaused = false;
+
+            pauseMenu.SetActive(false);
+
+            Cursor.lockState = CursorLockMode.Locked;
+
+            Time.timeScale = 1;
+        }
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("PONYIO");
+
+        Time.timeScale = 0;
     }
 
     public void UpdateScore()
@@ -39,6 +77,11 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Tienes {itemsCollected} de {totalItems} guapeton");
 
         collectedPilas.text = itemsCollected.ToString();
+
+        if (itemsCollected >= totalItems)
+        {
+            GameOver();
+        }
     }
 
     private void UpdateTimer()
