@@ -4,107 +4,135 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
-    public float speed= 10f  ;
+    public float speed = 10f;
     public float impulse = 5F;
     public float groundDistance = 2f;
     public float speedRotation = 10f;
     public float velocityMax = 100f;
     public float lastPosition;
+    public GameObject shadowPlayer;
 
     public float mouseSensitivity = 100f;
-    private float spinspeed = 200f;
     private GameObject focalPoint;
     private float horizontalInput, verticalInput;
     private Rigidbody playerRigidbody;
-    private float currentSpeed;
-    
+    private Animator playerAnimator;
+
+    // SPINDASH VARIABLES
+    private float spindashVelocity = 0;
+    private bool isSpindashing = false;
+    private Coroutine spindashCoroutine = null;
+
     // Start is called before the first frame update
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
-        
+        playerAnimator = GetComponent<Animator>();
+
         focalPoint = GameObject.Find("FocalPoint");
-        Physics.gravity *= 2;
-        //playerRigidbody.velocity = focalPoint.transform.forward * 200f;
+
+        Physics.gravity *= 4;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Jump 
-        if (Input.GetKeyDown(KeyCode.Space))
+        shadowPositionRaycast();
+
+        if (Input.GetKeyDown(KeyCode.Space) && IsOnGround() && !isSpindashing)
+
         {
-            if (IsOnGround())
-            {
-                // JUMP
-                playerRigidbody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
-
-            } else
-            {
-                //Boost en el aire
-                playerRigidbody.AddForce(Vector3.up * 10f, ForceMode.Impulse);
-                playerRigidbody.velocity = focalPoint.transform.forward * 50f;
-            }
-
+            // JUMP 
+            playerRigidbody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
         }
-        
-        if (Input.GetKeyUp(KeyCode.Mouse0 ))
-        {
-            if (IsOnGround())
-            {
-                //Sale disparado hacia adelante respecto a la camara
-                playerRigidbody.velocity = focalPoint.transform.forward * 100f;
 
-            }
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !IsOnGround() && !isSpindashing)
+        {
+            // GROUND POUND
+            playerRigidbody.AddForce(Vector3.down * 100f, ForceMode.Impulse);
         }
-         if (Input.GetKeyDown(KeyCode.Mouse0))
+
+        // SPINDASH
+        // ! Si al mantener click derecho y no está recargando el spindash 
+        if (Input.GetKeyDown(KeyCode.Mouse1) && !isSpindashing)
         {
-            //Spindash
-            transform.Rotate(Vector3.left * spinspeed * Time.deltaTime);
+            // Spindash pasa a ser TRUE
+            isSpindashing = true;
 
+            // Reduce la velocidad del jugador a 1
+            playerRigidbody.velocity -= Vector3.one * 1f;
 
-          
-            if (!IsOnGround())
-            {
-                //ground pound
-                playerRigidbody.AddForce(Vector3.down * 100f, ForceMode.Impulse);
+            Debug.Log("RECARGANDO SPINDASH");
 
-            }
+            // Empieza y guarda la coroutine en una variable global
+            spindashCoroutine = StartCoroutine(SpindashCooldown());
+        }
 
+        // SPINDASH PARTE 2
+        // ! Si al soltar el click derecho y estaba recargando el spindash 
+        if (Input.GetKeyUp(KeyCode.Mouse1) && isSpindashing)
+        {
+            // Spindash pasa a ser FALSE
+            isSpindashing = false;
+
+            // Aplica una fuerza forwards respecto a la dirección de la cámará con la velocidad recargada
+            playerRigidbody.AddForce(focalPoint.transform.forward * spindashVelocity, ForceMode.VelocityChange);
+
+            // Para la coroutine guardada en la variable anterior
+            StopCoroutine(spindashCoroutine);
+
+            Debug.Log("SPINDASH INICIADO");
         }
     }
 
+    // COROUTINE SPINDASH
+    private IEnumerator SpindashCooldown()
+    {
+        // Restablece la velocidad recargada a 0
+        spindashVelocity = 0;
+                    Debug.Log("SPINDASH: " + spindashVelocity + " / 200");
+
+        // Un bucle de 5 pasadas
+        for (int i = 0; i < 5; i++)
+        {
+            // Espera 1 segundo
+            yield return new WaitForSeconds(1f);
+            
+            // Suma +40 al total de la velocidad recargada
+            spindashVelocity += 40;
+
+            Debug.Log("SPINDASH: " + spindashVelocity + " / 200");
+        }
+    }
+
+
+    // CONTROLES BÁSICOS
     private void FixedUpdate()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        
-        verticalInput = Input.GetAxis("Vertical");
+        // Si no está spindasheando
+        if (!isSpindashing)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
 
-        playerRigidbody.AddForce(focalPoint.transform.forward * speed * verticalInput,ForceMode.Force);
+            verticalInput = Input.GetAxis("Vertical");
 
-        playerRigidbody.AddForce(focalPoint.transform.right * horizontalInput * speed);
-               
+            playerRigidbody.AddForce(focalPoint.transform.forward * speed * verticalInput, ForceMode.Force);
+
+            playerRigidbody.AddForce(focalPoint.transform.right * horizontalInput * speed);
+        }
+
         if (playerRigidbody.velocity.magnitude > velocityMax)
         {
             playerRigidbody.velocity = playerRigidbody.velocity.normalized * velocityMax;
         }
     }
-/*
-   private void CurrentSpeed()
-    {
-        
-        currentSpeed = (transform.position - lastPosition).magnitude / Time.deltaTime;
-        lastPosition = transform.position;
-    }
-    */
+
+    // DETECTA EL SUELO
     private bool IsOnGround()
     {
         RaycastHit hitData;
 
         Ray ray = new Ray(transform.position, Vector3.down);
-
-        
 
         if (Physics.Raycast(ray, out hitData, groundDistance))
         {
@@ -115,5 +143,30 @@ public class PlayerController : MonoBehaviour
             return false;
         }
     }
-    
+
+    // SOMBRA DEL PLAYER
+    private void shadowPositionRaycast()
+    {
+        RaycastHit hitData;
+
+        Ray ray = new Ray(transform.position, Vector3.down);
+
+        if (Physics.Raycast(ray, out hitData, 50))
+        {
+            // Guardamos la posición donde el raycast hace HIT
+            Vector3 variableTemporal = hitData.point;
+
+            // Modificamos la altura en Y de la posición
+            variableTemporal.y += 0.1f;
+
+            // La sombra toma la posición del HIT
+            shadowPlayer.transform.position = variableTemporal;
+
+            // Guarda la distancia entre la sombra y el player
+            float distance = transform.position.y - shadowPlayer.transform.position.y;
+
+            // Modifica la escala de la sombra según la distancia
+            shadowPlayer.transform.localScale = Vector3.one * -distance;
+        }
+    }
 }

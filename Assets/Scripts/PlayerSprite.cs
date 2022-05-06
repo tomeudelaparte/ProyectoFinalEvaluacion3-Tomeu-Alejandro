@@ -14,10 +14,10 @@ public class PlayerSprite : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void LateUpdate()
     {
         transform.LookAt(theCam.transform);
 
-        transform.position = (Player.transform.position + Vector3.up * 3);
+        transform.position = (Player.transform.position + Vector3.up * 2.5f);
     }
 }

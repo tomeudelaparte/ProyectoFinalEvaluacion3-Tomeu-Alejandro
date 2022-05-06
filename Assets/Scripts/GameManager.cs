@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         itemsCollected = 0;
 
         totalItems = GameObject.FindGameObjectsWithTag("Item").Length;
-        Debug.Log($"Items en total: {totalItems} ya sabes que haceh");
+        Debug.Log($"ITEMS EN TOTAL: {totalItems}");
 
         totalPilas.text = totalItems.ToString();
         collectedPilas.text = itemsCollected.ToString();
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
     public void UpdateScore()
     {
         itemsCollected++;
-        Debug.Log($"Tienes {itemsCollected} de {totalItems} guapeton");
+        Debug.Log($"Tienes {itemsCollected} de {totalItems}");
 
         collectedPilas.text = itemsCollected.ToString();
 
