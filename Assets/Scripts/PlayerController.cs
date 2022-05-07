@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public float lastPosition;
     public GameObject shadowPlayer;
 
+    public ParticleSystem spindashParticleSystem;
+
     public float mouseSensitivity = 100f;
     private GameObject focalPoint;
     private float horizontalInput, verticalInput;
@@ -53,7 +55,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // SPINDASH
-        // ! Si al mantener click derecho y no está recargando el spindash 
+        // ! Si al mantener click derecho y no est? recargando el spindash 
         if (Input.GetKeyDown(KeyCode.Mouse1) && !isSpindashing)
         {
             // Spindash pasa a ser TRUE
@@ -66,6 +68,14 @@ public class PlayerController : MonoBehaviour
 
             // Empieza y guarda la coroutine en una variable global
             spindashCoroutine = StartCoroutine(SpindashCooldown());
+
+            //Sistema de particulas
+            Vector3 offset = new Vector3(0, 0, 0);
+            Instantiate(spindashParticleSystem,
+                transform.position + offset,
+                spindashParticleSystem.transform.rotation);
+
+            spindashParticleSystem.Play();
         }
 
         // SPINDASH PARTE 2
@@ -75,13 +85,14 @@ public class PlayerController : MonoBehaviour
             // Spindash pasa a ser FALSE
             isSpindashing = false;
 
-            // Aplica una fuerza forwards respecto a la dirección de la cámará con la velocidad recargada
+            // Aplica una fuerza forwards respecto a la direcci?n de la c?mar? con la velocidad recargada
             playerRigidbody.AddForce(focalPoint.transform.forward * spindashVelocity, ForceMode.VelocityChange);
 
             // Para la coroutine guardada en la variable anterior
             StopCoroutine(spindashCoroutine);
 
             Debug.Log("SPINDASH INICIADO");
+            spindashParticleSystem.Stop();
         }
     }
 
@@ -96,7 +107,7 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             // Espera 1 segundo
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.4f);
             
             // Suma +40 al total de la velocidad recargada
             spindashVelocity += 40;
@@ -106,10 +117,10 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    // CONTROLES BÁSICOS
+    // CONTROLES B?SICOS
     private void FixedUpdate()
     {
-        // Si no está spindasheando
+        // Si no est? spindasheando
         if (!isSpindashing)
         {
             horizontalInput = Input.GetAxis("Horizontal");
@@ -153,19 +164,19 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hitData, 50))
         {
-            // Guardamos la posición donde el raycast hace HIT
+            // Guardamos la posici?n donde el raycast hace HIT
             Vector3 variableTemporal = hitData.point;
 
-            // Modificamos la altura en Y de la posición
+            // Modificamos la altura en Y de la posici?n
             variableTemporal.y += 0.1f;
 
-            // La sombra toma la posición del HIT
+            // La sombra toma la posici?n del HIT
             shadowPlayer.transform.position = variableTemporal;
 
             // Guarda la distancia entre la sombra y el player
             float distance = transform.position.y - shadowPlayer.transform.position.y;
 
-            // Modifica la escala de la sombra según la distancia
+            // Modifica la escala de la sombra seg?n la distancia
             shadowPlayer.transform.localScale = Vector3.one * -distance;
         }
     }
