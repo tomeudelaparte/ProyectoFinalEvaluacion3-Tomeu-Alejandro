@@ -11,10 +11,11 @@ public class PlayerController : MonoBehaviour
     public float velocityMax = 100f;
     public float lastPosition;
     public GameObject shadowPlayer;
-
     public ParticleSystem spindashParticleSystem;
-
     public float mouseSensitivity = 100f;
+
+    private PlayerSprite playerSprite;
+
     private GameObject focalPoint;
     private float horizontalInput, verticalInput;
     private Rigidbody playerRigidbody;
@@ -30,10 +31,15 @@ public class PlayerController : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
+        playerSprite = FindObjectOfType<PlayerSprite>();
+
+        spindashParticleSystem.Stop();
 
         focalPoint = GameObject.Find("FocalPoint");
 
         Physics.gravity *= 4;
+
+        playerSprite.IdleSprite();
     }
 
     // Update is called once per frame
@@ -41,11 +47,18 @@ public class PlayerController : MonoBehaviour
     {
         shadowPositionRaycast();
 
+        if(IsOnGround())
+        {
+            //playerSprite.IdleSprite();
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && IsOnGround() && !isSpindashing)
 
         {
             // JUMP 
             playerRigidbody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
+
+            playerSprite.JumpSprite();
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && !IsOnGround() && !isSpindashing)
@@ -70,12 +83,15 @@ public class PlayerController : MonoBehaviour
             spindashCoroutine = StartCoroutine(SpindashCooldown());
 
             //Sistema de particulas
-            Vector3 offset = new Vector3(0, 0, 0);
-            Instantiate(spindashParticleSystem,
-                transform.position + offset,
-                spindashParticleSystem.transform.rotation);
+           
+            if(!spindashParticleSystem.isPlaying)
+            {
+                spindashParticleSystem.gameObject.SetActive(true);
 
-            spindashParticleSystem.Play();
+                spindashParticleSystem.Play();
+                playerSprite.SpindashSprite();
+            }
+            
         }
 
         // SPINDASH PARTE 2
@@ -92,7 +108,14 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(spindashCoroutine);
 
             Debug.Log("SPINDASH INICIADO");
-            spindashParticleSystem.Stop();
+          
+
+            if (spindashParticleSystem.isPlaying)
+            {
+                spindashParticleSystem.Stop();
+                playerSprite.IdleSprite();
+                spindashParticleSystem.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -106,7 +129,7 @@ public class PlayerController : MonoBehaviour
         // Un bucle de 5 pasadas
         for (int i = 0; i < 5; i++)
         {
-            // Espera 1 segundo
+            // Espera 0.4 segundos
             yield return new WaitForSeconds(0.4f);
             
             // Suma +40 al total de la velocidad recargada
@@ -135,6 +158,15 @@ public class PlayerController : MonoBehaviour
         if (playerRigidbody.velocity.magnitude > velocityMax)
         {
             playerRigidbody.velocity = playerRigidbody.velocity.normalized * velocityMax;
+        }
+    }
+
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.CompareTag("Ground"))
+        {
+            playerSprite.IdleSprite();
         }
     }
 
