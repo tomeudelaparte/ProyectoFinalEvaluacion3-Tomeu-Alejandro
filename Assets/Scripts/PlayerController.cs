@@ -65,6 +65,9 @@ public class PlayerController : MonoBehaviour
         {
             // GROUND POUND
             playerRigidbody.AddForce(Vector3.down * 100f, ForceMode.Impulse);
+
+            playerSprite.StompSprite();
+            
         }
 
         // SPINDASH

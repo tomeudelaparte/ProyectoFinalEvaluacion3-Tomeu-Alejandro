@@ -47,5 +47,8 @@ public class PlayerSprite : MonoBehaviour
     {
         ChangeSprite(3);
     }
-
+    public void StompSprite()
+    {
+        ChangeSprite(4);
+    }
 }
