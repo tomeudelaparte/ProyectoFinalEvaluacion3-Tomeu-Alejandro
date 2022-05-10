@@ -51,4 +51,13 @@ public class PlayerSprite : MonoBehaviour
     {
         ChangeSprite(4);
     }
+    public void LeftSprite()
+    {
+        ChangeSprite(5);
+    }
+    public void RightSprite()
+    {
+        ChangeSprite(6);
+    }
+
 }

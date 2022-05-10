@@ -47,9 +47,19 @@ public class PlayerController : MonoBehaviour
     {
         shadowPositionRaycast();
 
-        if(IsOnGround())
+        if(Input.GetKeyDown(KeyCode.D)&&IsOnGround())
         {
-            //playerSprite.IdleSprite();
+            playerSprite.RightSprite();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A) && IsOnGround())
+        {
+            playerSprite.LeftSprite();
+        }
+
+        if (Input.GetKeyDown(KeyCode.S) && IsOnGround())
+        {
+            playerSprite.BackwardSprite();
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && IsOnGround() && !isSpindashing)
