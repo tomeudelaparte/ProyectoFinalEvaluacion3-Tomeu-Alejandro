@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class PlayerParticles : MonoBehaviour
 {
-    private GameObject player;
-    private GameObject camera;
-
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-        camera = GameObject.Find("FocalPoint");
-    }
+    public GameObject player;
+    public GameObject focalPoint;
 
     void Update()
     {
         gameObject.transform.position = player.transform.position;
 
-        transform.LookAt(camera.transform.position);
-        //transform.localEulerAngles = new Vector3(transform.transform.localEulerAngles.x, transform.transform.localEulerAngles.y, 0);
+        transform.LookAt(focalPoint.transform.position);
     }
 }

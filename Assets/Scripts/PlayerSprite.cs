@@ -5,23 +5,16 @@ using UnityEngine.UI;
 
 public class PlayerSprite : MonoBehaviour
 {
+    public GameObject player;
+    public GameObject focalPoint;
+
     public Sprite[] playerSprites;
 
-    private GameObject theCam;
-    private GameObject Player;
-    // Start is called before the first frame update
-    void Start()
-    {
-        Player = GameObject.Find("Player");
-        theCam = GameObject.Find("FocalPoint");
-    }
-
-    // Update is called once per frame
     void LateUpdate()
     {
-        transform.LookAt(theCam.transform);
+        transform.LookAt(focalPoint.transform);
 
-        transform.position = (Player.transform.position + Vector3.up * 2.5f);
+        transform.position = (player.transform.position + Vector3.up * 2.5f);
     }
 
     private void ChangeSprite(int index)
@@ -34,30 +27,31 @@ public class PlayerSprite : MonoBehaviour
         ChangeSprite(0);
     }
 
-    public void JumpSprite()
+    public void LeftSprite()
     {
         ChangeSprite(1);
     }
-    public void BackwardSprite()
+    public void RightSprite()
     {
         ChangeSprite(2);
     }
 
-    public void SpindashSprite()
+    public void BackSprite()
     {
         ChangeSprite(3);
     }
-    public void StompSprite()
+
+    public void JumpSprite()
     {
         ChangeSprite(4);
     }
-    public void LeftSprite()
+
+    public void SpindashSprite()
     {
         ChangeSprite(5);
     }
-    public void RightSprite()
+    public void StompSprite()
     {
         ChangeSprite(6);
     }
-
 }

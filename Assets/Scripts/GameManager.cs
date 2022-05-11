@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI timestamp, collectedPilas, totalPilas;
     public GameObject pauseMenu;
+    public GameObject gameOverMenu;
 
+
+    private bool isGameOver = false;
     private bool isPaused = false;
 
     private int totalItems;
@@ -26,6 +29,8 @@ public class GameManager : MonoBehaviour
 
         totalPilas.text = totalItems.ToString();
         collectedPilas.text = itemsCollected.ToString();
+
+        Physics.gravity = new Vector3(0, -39.24f, 0);
     }
 
     void Update()
@@ -40,8 +45,7 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
-
-        if (!isPaused)
+        if (!isPaused && !isGameOver)
         {
             isPaused = true;
 
@@ -52,7 +56,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
 
         }
-        else
+        else if(!isGameOver)
         {
             isPaused = false;
 
@@ -66,7 +70,11 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        Debug.Log("PONYIO");
+        isGameOver = true;
+
+        gameOverMenu.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
 
         Time.timeScale = 0;
     }

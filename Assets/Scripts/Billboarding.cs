@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class Billboarding : MonoBehaviour
 {
-    private GameObject theCam;
-    public bool useStaticBillboard;
-    // Start is called before the first frame update
+    private GameObject focalPoint;
+    private bool useStaticBillboard;
+
     void Start()
     {
-        theCam = GameObject.Find("FocalPoint");
+        focalPoint = GameObject.Find("FocalPoint");
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
         if (!useStaticBillboard)
         {
-            transform.LookAt(theCam.transform);
-        } 
+            transform.LookAt(focalPoint.transform);
+        }
         else
         {
-            transform.rotation = theCam.transform.rotation;
+            transform.rotation = focalPoint.transform.rotation;
         }
 
         transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);

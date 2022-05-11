@@ -132,9 +132,12 @@ MonoBehaviour:
   groundDistance: 2
   speedRotation: 100
   velocityMax: 150
-  lastPosition: 0
   shadowPlayer: {fileID: 0}
+  spindashParticleSystem: {fileID: 0}
   mouseSensitivity: 0
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!96 &780289038
 TrailRenderer:
   serializedVersion: 2
@@ -250,7 +253,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1160100153040186668}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: b770e6347ac5d8949a5f3f8711e0a997, type: 2}
   m_CullingMode: 0
