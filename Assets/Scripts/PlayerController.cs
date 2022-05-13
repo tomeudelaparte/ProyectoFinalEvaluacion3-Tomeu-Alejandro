@@ -66,24 +66,26 @@ public class PlayerController : MonoBehaviour
                 playerSprite.RightSprite();
             }
         }
-        if(!IsOnGround() && !isSpindashing)
-        {
-            playerSprite.JumpSprite();
-        }
+        //Jump sprite aparece
 
+
+        //Jump
         if (Input.GetKeyDown(KeyCode.Space) && IsOnGround() && !isSpindashing)
 
         {
             playerRigidbody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
+            playerSprite.JumpSprite();
         }
-
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !IsOnGround() && !isSpindashing)
+        
+        //Stomp
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             playerRigidbody.AddForce(Vector3.down * 100f, ForceMode.Impulse);
 
             playerSprite.StompSprite();
         }
 
+        //Spindash
         if (Input.GetKeyDown(KeyCode.Mouse1) && !isSpindashing)
         {
             isSpindashing = true;
