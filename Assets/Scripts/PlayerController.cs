@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("--------------")]
+    [Header("GROUND DETECTION")]
     public LayerMask groundLayerMask;
 
-    [Header("--------------")]
+    [Header("VALUES")]
     public float speed = 10f;
     public float impulse = 5F;
     public float groundDistance = 2f;
     public float speedRotation = 10f;
     public float velocityMax = 100f;
 
-    [Header("--------------")]
+    [Header("PARTICLES")]
     public ParticleSystem spindashParticleSystem;
     
     private float horizontalInput, verticalInput;
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private PlayerSprite playerSprite;
     private GameObject focalPoint;
 
-    // SPINDASH VARIABLES
+    [Header("SPINDASH")]
     private float spindashVelocity = 0;
     private bool isSpindashing = false;
     private Coroutine spindashCoroutine = null;
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
         {
             isSpindashing = true;
 
-            playerRigidbody.velocity -= Vector3.one * 1f;
+            playerRigidbody.velocity *= 0.9f;
 
             Debug.Log("RECARGANDO SPINDASH");
 
