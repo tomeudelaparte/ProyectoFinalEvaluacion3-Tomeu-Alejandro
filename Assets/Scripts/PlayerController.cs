@@ -27,9 +27,11 @@ public class PlayerController : MonoBehaviour
     private float spindashVelocity = 0;
     private bool isSpindashing = false;
     private Coroutine spindashCoroutine = null;
-
+    private GameManager gameManager;
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
+
         playerRigidbody = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
         playerSprite = FindObjectOfType<PlayerSprite>();
@@ -39,6 +41,7 @@ public class PlayerController : MonoBehaviour
         focalPoint = GameObject.Find("FocalPoint");
 
         playerSprite.IdleSprite();
+
     }
 
     void Update()
@@ -112,7 +115,7 @@ public class PlayerController : MonoBehaviour
             playerRigidbody.AddForce(focalPoint.transform.forward * spindashVelocity, ForceMode.VelocityChange);
 
             StopCoroutine(spindashCoroutine);
-
+            gameManager.ResetSpindash(0f);
             Debug.Log("SPINDASH INICIADO");
 
             if (spindashParticleSystem.isPlaying)
@@ -127,6 +130,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator SpindashCooldown()
     {
         spindashVelocity = 0;
+        gameManager.SetSpindash(spindashVelocity);
         Debug.Log("SPINDASH: " + spindashVelocity + " / 200");
 
         for (int i = 0; i < 5; i++)
@@ -134,7 +138,7 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.4f);
 
             spindashVelocity += 40;
-
+            gameManager.SetSpindash(spindashVelocity);
             Debug.Log("SPINDASH: " + spindashVelocity + " / 200");
         }
     }

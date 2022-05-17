@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using TMPro;
+using UnityEngine.UI;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI totalPilas;
     public TextMeshProUGUI collectedPilas;
     public TextMeshProUGUI timestamp;
+    public Slider sliderUI;
 
     [Header("PANELS")]
     public GameObject pauseMenu;
@@ -175,5 +178,14 @@ public class GameManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void SetSpindash(float spin)
+    {
+        sliderUI.value = spin;
+    }
+    public void ResetSpindash(float spin)
+    {
+        sliderUI.value = 0;
     }
 }
