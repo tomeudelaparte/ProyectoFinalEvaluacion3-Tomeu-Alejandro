@@ -35,7 +35,15 @@ public class Realtimecam : MonoBehaviour
         ChangeSprite(3);
     }
 
-   void Update()
+    public void RightSprite()
+    {
+        ChangeSprite(4);
+    }
+    public void LeftSprite()
+    {
+        ChangeSprite(5);
+    }
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
 
@@ -43,7 +51,7 @@ public class Realtimecam : MonoBehaviour
             jumpSprite();
         }
 
-        if(Input.GetKeyDown(KeyCode.W)|| Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S)|| Input.GetKeyDown(KeyCode.D))
+        if(Input.GetKeyDown(KeyCode.W)||  Input.GetKeyDown(KeyCode.S))
 
         {
             IdleSprite();
@@ -57,6 +65,16 @@ public class Realtimecam : MonoBehaviour
 
         {
             StompSprite();
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+
+        {
+            LeftSprite();
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+
+        {
+            RightSprite();
         }
     }
 }
