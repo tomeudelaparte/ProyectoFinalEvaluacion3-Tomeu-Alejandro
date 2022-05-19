@@ -24,8 +24,9 @@ public class PlayerController : MonoBehaviour
     private GameObject focalPoint;
 
     [Header("AUDIO")]
-    private AudioSource playerAudioSource;
+    public AudioSource playerAudioSource;
     public AudioClip[] JumpVoices;
+    public AudioClip[] SpindashVoices;
 
     [Header("SPINDASH")]
     private float spindashVelocity = 0;
@@ -80,9 +81,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && IsOnGround() && !isSpindashing)
 
         {
+            
             playerRigidbody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
             playerSprite.JumpSprite();
             int randomIndex = Random.Range(0, JumpVoices.Length);
+            playerAudioSource.PlayOneShot(JumpVoices[randomIndex], 1);
         }
         
         //Stomp
@@ -110,6 +113,8 @@ public class PlayerController : MonoBehaviour
 
                 spindashParticleSystem.Play();
                 playerSprite.SpindashSprite();
+                int randomIndex = Random.Range(0, SpindashVoices.Length);
+                playerAudioSource.PlayOneShot(SpindashVoices[randomIndex], 1);
             }
         }
 
