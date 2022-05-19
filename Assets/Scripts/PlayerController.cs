@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour
     private PlayerSprite playerSprite;
     private GameObject focalPoint;
 
+    [Header("AUDIO")]
+    private AudioSource playerAudioSource;
+    public AudioClip[] JumpVoices;
+
     [Header("SPINDASH")]
     private float spindashVelocity = 0;
     private bool isSpindashing = false;
@@ -41,7 +45,7 @@ public class PlayerController : MonoBehaviour
         focalPoint = GameObject.Find("FocalPoint");
 
         playerSprite.IdleSprite();
-
+        playerAudioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -78,6 +82,7 @@ public class PlayerController : MonoBehaviour
         {
             playerRigidbody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
             playerSprite.JumpSprite();
+            int randomIndex = Random.Range(0, JumpVoices.Length);
         }
         
         //Stomp
