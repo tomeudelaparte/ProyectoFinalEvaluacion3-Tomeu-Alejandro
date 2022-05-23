@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 9078045849949441331}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -469.82178, y: 39, z: 26}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.49586, y: 0.49586, z: 0.49586}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -123,7 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a3e0cfb5b7aebc42bd62252b9a25180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potParticleSystem: {fileID: 0}
+  potParticleSystem: {fileID: 8240977456127598060, guid: fac04e0001e39ce4daf9831e42d04364, type: 3}
+  potbreak: {fileID: 8300000, guid: 5f2b5fd628dda3344b9716d98b470b1c, type: 3}
 --- !u!82 &7710059247749696240
 AudioSource:
   m_ObjectHideFlags: 0
