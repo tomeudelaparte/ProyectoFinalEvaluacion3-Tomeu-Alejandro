@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     public AudioSource playerAudioSource;
     public AudioClip[] JumpVoices;
     public AudioClip[] SpindashVoices;
+    public AudioClip Spindashsound;
+    public AudioClip jumpsound;
 
     [Header("SPINDASH")]
     private float spindashVelocity = 0;
@@ -86,8 +88,10 @@ public class PlayerController : MonoBehaviour
             playerSprite.JumpSprite();
             int randomIndex = Random.Range(0, JumpVoices.Length);
             playerAudioSource.PlayOneShot(JumpVoices[randomIndex], 1);
+            playerAudioSource.PlayOneShot(JumpVoices[randomIndex], 0.5f);
+
         }
-        
+
         //Stomp
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -115,7 +119,9 @@ public class PlayerController : MonoBehaviour
                 playerSprite.SpindashSprite();
                 int randomIndex = Random.Range(0, SpindashVoices.Length);
                 playerAudioSource.PlayOneShot(SpindashVoices[randomIndex], 1);
+                
             }
+            playerAudioSource.PlayOneShot(Spindashsound, 0.5f);
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse1) && isSpindashing)
@@ -134,6 +140,7 @@ public class PlayerController : MonoBehaviour
                 playerSprite.IdleSprite();
                 spindashParticleSystem.gameObject.SetActive(false);
             }
+            playerAudioSource.Stop();
         }
     }
 
