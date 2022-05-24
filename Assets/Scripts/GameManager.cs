@@ -105,14 +105,14 @@ public class GameManager : MonoBehaviour
 
         if (!dataPersistence.HasKey("Best Time"))
         {
-            dataPersistence.SavePrefs("Best Time", "99:99.09");
+            dataPersistence.SetString("Best Time", "99:99.09");
         }
 
-        bestTime.text = dataPersistence.LoadPrefs("Best Time");
+        bestTime.text = dataPersistence.GetString("Best Time");
 
         if (checkBestTime(currentTime.text, bestTime.text))
         {
-            dataPersistence.SavePrefs("Best Time", currentTime.text);
+            dataPersistence.SetString("Best Time", currentTime.text);
         }
 
         Cursor.lockState = CursorLockMode.None;

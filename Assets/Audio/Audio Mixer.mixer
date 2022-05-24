@@ -52,7 +52,7 @@ AudioMixerController:
   - guid: 9fce3fc8af53e7a479814a5b94f65ef6
     name: Effects Volume
   - guid: 5f264ef17d43dde42bf51ca3094f246c
-    name: Master Volume
+    name: General Volume
   - guid: ff1dd4cda8c40e6448d660554c59f835
     name: Music Volume
   m_AudioMixerGroupViews:
