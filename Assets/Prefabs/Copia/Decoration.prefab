@@ -302,7 +302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eaa80e0ed30b9845890256259c7045b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useStaticBillboard: 0
 --- !u!1 &7282377535690449280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,6 +1041,10 @@ PrefabInstance:
     - target: {fileID: 769701842100882976, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
       propertyPath: m_Name
       value: fountain (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 769701842100882978, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 769701842100882979, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
       propertyPath: m_RootOrder
@@ -2262,6 +2265,10 @@ PrefabInstance:
     - target: {fileID: 769701842100882976, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
       propertyPath: m_Name
       value: fountain (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 769701842100882978, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 769701842100882979, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
       propertyPath: m_RootOrder
@@ -5987,6 +5994,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fountain (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 769701842100882978, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 769701842100882979, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
       propertyPath: m_RootOrder
       value: 174
@@ -8015,6 +8026,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fountain (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 769701842100882978, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 769701842100882979, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
       propertyPath: m_RootOrder
       value: 172
@@ -9247,7 +9262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1200370301133738914, guid: 40a303b7b855de749be4806f93d7dbfd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.84
+      value: -4.4644947
       objectReference: {fileID: 0}
     - target: {fileID: 1200370301133738914, guid: 40a303b7b855de749be4806f93d7dbfd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11244,6 +11259,10 @@ PrefabInstance:
     - target: {fileID: 769701842100882976, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
       propertyPath: m_Name
       value: fountain (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 769701842100882978, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 769701842100882978, guid: a9da69784c0d0684ea51dddf6d1a1d6c, type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].time
