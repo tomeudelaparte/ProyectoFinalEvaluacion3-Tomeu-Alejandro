@@ -35,9 +35,13 @@ public class PlayerController : MonoBehaviour
     private bool isSpindashing = false;
     private Coroutine spindashCoroutine = null;
     private GameManager gameManager;
+    private Animator spanimator;
+
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+
+        spanimator = GetComponent<Animator>();
 
         playerRigidbody = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
@@ -106,7 +110,7 @@ public class PlayerController : MonoBehaviour
             isSpindashing = true;
 
             playerRigidbody.velocity *= 0.9f;
-
+            spanimator.SetTrigger("spinAnimation");
             Debug.Log("RECARGANDO SPINDASH");
 
             spindashCoroutine = StartCoroutine(SpindashCooldown());
@@ -141,6 +145,7 @@ public class PlayerController : MonoBehaviour
                 spindashParticleSystem.gameObject.SetActive(false);
             }
             playerAudioSource.Stop();
+            spanimator.SetTrigger("spinStop");
         }
     }
 
