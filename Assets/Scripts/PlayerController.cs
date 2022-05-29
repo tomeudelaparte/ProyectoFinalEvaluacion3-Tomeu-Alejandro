@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
 
         playerSprite.IdleSprite();
         playerAudioSource = GetComponent<AudioSource>();
+
+        spanimator.enabled = false;
     }
 
     void Update()
@@ -110,6 +112,8 @@ public class PlayerController : MonoBehaviour
             isSpindashing = true;
 
             playerRigidbody.velocity *= 0.9f;
+
+            spanimator.enabled = true;
             spanimator.SetTrigger("spinAnimation");
             Debug.Log("RECARGANDO SPINDASH");
 
@@ -146,6 +150,7 @@ public class PlayerController : MonoBehaviour
             }
             playerAudioSource.Stop();
             spanimator.SetTrigger("spinStop");
+            spanimator.enabled = false;
         }
     }
 
