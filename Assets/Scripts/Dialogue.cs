@@ -5,22 +5,25 @@ using TMPro;
 public class Dialogue : MonoBehaviour
 {
     
-    public Canvas canvas;
- /*
+    public GameObject canvas;
+ 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            canvas.gameObject.SetActive(true);
+           canvas.SetActive(true);
         }
-        else
-        {
-            gameObject.SetActive(false);
-            Debug.Log($"it works!");
-        }
+        
 
 
         
     }
- */
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            canvas.SetActive(false);
+        }
+    }
+
 }
