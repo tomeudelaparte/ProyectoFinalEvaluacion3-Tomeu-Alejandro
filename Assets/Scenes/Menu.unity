@@ -938,8 +938,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eede81a500ab32040aa54dfdc08e1905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generalSlider: {fileID: 0}
-  musicSlider: {fileID: 0}
+  generalSlider: {fileID: 1311424584}
+  musicSlider: {fileID: 1621468188}
   soundfxSlider: {fileID: 101574094}
   audioMixer: {fileID: 24100000, guid: 0a5af4ad9ad8ca84daec4da95580ace4, type: 2}
 --- !u!1 &104677259
@@ -5666,7 +5666,7 @@ GameObject:
   - component: {fileID: 1311424583}
   - component: {fileID: 1311424584}
   m_Layer: 5
-  m_Name: Slider Effects
+  m_Name: Slider General
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7461,7 +7461,7 @@ GameObject:
   - component: {fileID: 1621468187}
   - component: {fileID: 1621468188}
   m_Layer: 5
-  m_Name: Slider Effects
+  m_Name: Slider Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
