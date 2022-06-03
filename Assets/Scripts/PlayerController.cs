@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip[] SpindashVoices;
     public AudioClip Spindashsound;
     public AudioClip jumpsound;
+    public AudioClip boostsound;
+    public AudioClip ItemGetSound;
 
     [Header("SPINDASH")]
     private float spindashVelocity = 0;
@@ -95,7 +97,7 @@ public class PlayerController : MonoBehaviour
             int randomIndex = Random.Range(0, JumpVoices.Length);
             playerAudioSource.PlayOneShot(JumpVoices[randomIndex], 1);
             playerAudioSource.PlayOneShot(JumpVoices[randomIndex], 0.5f);
-
+            playerAudioSource.PlayOneShot(jumpsound, 0.7f);
         }
 
         //Stomp
@@ -151,6 +153,7 @@ public class PlayerController : MonoBehaviour
             playerAudioSource.Stop();
             spanimator.SetTrigger("spinStop");
             spanimator.enabled = false;
+            playerAudioSource.PlayOneShot(boostsound, 0.5f);
         }
     }
 
@@ -197,6 +200,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Item"))
+        {
+            playerAudioSource.PlayOneShot(ItemGetSound, 0.7f);
+        }
+    }
     // DETECTA EL SUELO
     private bool IsOnGround()
     {

@@ -150,7 +150,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: db38582d5f6cb7040b31da12e3318a3a, type: 3}
   - {fileID: 8300000, guid: f8669d793562e5840a677ea701650a9e, type: 3}
   Spindashsound: {fileID: 8300000, guid: 564254b7ff7274835a704d3c5a9baf11, type: 3}
-  jumpsound: {fileID: 0}
+  jumpsound: {fileID: 8300000, guid: 408d4185c64551c4ea372322361a9b97, type: 3}
+  boostsound: {fileID: 8300000, guid: 9f6ff19d83211f64f8d233914b589e63, type: 3}
+  ItemGetSound: {fileID: 8300000, guid: c84b8e2f19ea94f46b1a6de53838164e, type: 3}
 --- !u!96 &780289038
 TrailRenderer:
   serializedVersion: 2
