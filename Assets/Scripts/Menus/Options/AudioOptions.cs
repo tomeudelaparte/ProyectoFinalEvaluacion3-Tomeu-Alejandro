@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
 
-public class OptionsManager : MonoBehaviour
+public class AudioOptions : MonoBehaviour
 {
     [Header("DATE PERSISTENCE")]
     private DataPersistence dataPersistence;
