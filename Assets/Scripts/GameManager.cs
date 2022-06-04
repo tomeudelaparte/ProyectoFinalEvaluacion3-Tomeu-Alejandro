@@ -39,8 +39,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Application.targetFrameRate = 60;
-
         Cursor.lockState = CursorLockMode.Locked;
 
         Physics.gravity = new Vector3(0, -39.24f, 0);
