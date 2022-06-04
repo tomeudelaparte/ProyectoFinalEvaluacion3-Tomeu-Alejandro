@@ -282,8 +282,8 @@ MonoBehaviour:
   focalPoint: {fileID: 0}
   playerSprites:
   - {fileID: 21300000, guid: d4cdb8f368ba0d74197c1ae10eadba7f, type: 3}
-  - {fileID: 21300000, guid: bb46c26a549594b129b0c7fa10da4d23, type: 3}
   - {fileID: 21300000, guid: eef569207fafb4dbbad0e0a90036d676, type: 3}
+  - {fileID: 21300000, guid: bb46c26a549594b129b0c7fa10da4d23, type: 3}
   - {fileID: 21300000, guid: 13ee2d59136907e44904f5f6ce597e1e, type: 3}
   - {fileID: 21300000, guid: 4aa05d9bfaf224d14a518d351be70daf, type: 3}
   - {fileID: 21300000, guid: 56da13cf44909744ab95f6ad845dbe68, type: 3}

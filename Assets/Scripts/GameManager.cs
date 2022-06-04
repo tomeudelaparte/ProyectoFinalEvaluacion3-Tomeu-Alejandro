@@ -4,10 +4,16 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("PLAYER")]
+    public GameObject player;
+
+    [Header("SPAWN POSITIONS")]
+    public GameObject[] spawnPositions;
+
     [Header("USER INTERFACE")]
     public TextMeshProUGUI totalPilas;
     public TextMeshProUGUI collectedPilas;
@@ -16,11 +22,8 @@ public class GameManager : MonoBehaviour
 
     [Header("PANELS")]
     public GameObject pauseMenu;
-    public GameObject gameOverMenu;
-
-    [Header("GAME COMPLETE")]
-    public TextMeshProUGUI currentTime;
-    public TextMeshProUGUI bestTime;
+    public GameObject optionsMenu;
+    public GameObject userInterface;
 
     [Header("AUDIO SYSTEM")]
     public GameObject audioSystem;
@@ -49,6 +52,8 @@ public class GameManager : MonoBehaviour
 
         totalPilas.text = totalItems.ToString();
         collectedPilas.text = itemsCollected.ToString();
+
+        playerSpawn();
     }
 
     void Update()
@@ -61,14 +66,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void playerSpawn()
+    {
+        bool skipTutorial = dataPersistence.GetBool("TUTORIAL SKIP");
+
+        if (!skipTutorial)
+        {
+            player.gameObject.transform.rotation = spawnPositions[0].transform.rotation;
+            player.gameObject.transform.position = spawnPositions[0].transform.position;
+        }
+        else
+        {
+            player.gameObject.transform.rotation = spawnPositions[1].transform.rotation;
+            player.gameObject.transform.position = spawnPositions[1].transform.position;
+        }
+    }
+
     public void Pause()
     {
-        if (!isPaused && !isGameOver)
+        if (!isPaused)
         {
             isPaused = true;
 
             Time.timeScale = 0;
 
+            userInterface.SetActive(false);
             pauseMenu.SetActive(true);
 
             audioSource[0].Pause();
@@ -76,7 +98,7 @@ public class GameManager : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.None;
         }
-        else if (!isGameOver)
+        else
         {
             isPaused = false;
 
@@ -85,7 +107,9 @@ public class GameManager : MonoBehaviour
             audioSource[0].Play();
             audioSource[1].Pause();
 
+            userInterface.SetActive(true);
             pauseMenu.SetActive(false);
+            optionsMenu.SetActive(false);
 
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -93,27 +117,25 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        Time.timeScale = 0;
-
         isGameOver = true;
 
-        gameOverMenu.SetActive(true);
-
-        currentTime.text = timestamp.text;
+        string currentTime = timestamp.text;
 
         if (!dataPersistence.HasKey("Best Time"))
         {
             dataPersistence.SetString("Best Time", "99:99.09");
         }
 
-        bestTime.text = dataPersistence.GetString("Best Time");
+        string bestTime = dataPersistence.GetString("Best Time");
 
-        if (checkBestTime(currentTime.text, bestTime.text))
+        dataPersistence.SetString("Current Time", currentTime);
+
+        if (checkBestTime(currentTime, bestTime))
         {
-            dataPersistence.SetString("Best Time", currentTime.text);
+            dataPersistence.SetString("Best Time", currentTime);
         }
 
-        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene("GameOver");
     }
 
     public void UpdateScore()

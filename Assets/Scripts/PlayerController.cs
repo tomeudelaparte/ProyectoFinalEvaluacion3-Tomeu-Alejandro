@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private GameManager gameManager;
+
+    private AudioSource playerAudioSource;
+    private Rigidbody playerRigidbody;
+    private Animator playerAnimator;
+    private PlayerSprite playerSprite;
+    private GameObject focalPoint;
+
+    private float horizontalInput, verticalInput;
+
     [Header("GROUND DETECTION")]
     public LayerMask groundLayerMask;
 
@@ -16,15 +26,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("PARTICLES")]
     public ParticleSystem spindashParticleSystem;
-    
-    private float horizontalInput, verticalInput;
-    private Rigidbody playerRigidbody;
-    private Animator playerAnimator;
-    private PlayerSprite playerSprite;
-    private GameObject focalPoint;
 
-    [Header("AUDIO")]
-    public AudioSource playerAudioSource;
+    [Header("AUDIO CLIPS")]
     public AudioClip[] JumpVoices;
     public AudioClip[] SpindashVoices;
     public AudioClip Spindashsound;
@@ -36,34 +39,31 @@ public class PlayerController : MonoBehaviour
     private float spindashVelocity = 0;
     private bool isSpindashing = false;
     private Coroutine spindashCoroutine = null;
-    private GameManager gameManager;
-    private Animator spanimator;
+
 
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
 
-        spanimator = GetComponent<Animator>();
-
-        playerRigidbody = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
+        playerRigidbody = GetComponent<Rigidbody>();
         playerSprite = FindObjectOfType<PlayerSprite>();
-
-        spindashParticleSystem.Stop();
+        playerAudioSource = GetComponent<AudioSource>();
 
         focalPoint = GameObject.Find("FocalPoint");
 
-        playerSprite.IdleSprite();
-        playerAudioSource = GetComponent<AudioSource>();
+        spindashParticleSystem.Stop();
 
-        spanimator.enabled = false;
+        playerAnimator.enabled = false;
+
+        playerSprite.IdleSprite();
     }
 
     void Update()
     {
         if (IsOnGround() && !isSpindashing)
         {
-            
+
             if (Input.GetKey(KeyCode.W))
             {
                 playerSprite.IdleSprite();
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
                 playerSprite.LeftSprite();
             }
 
-            if (Input.GetKey(KeyCode.S) )
+            if (Input.GetKey(KeyCode.S))
             {
                 playerSprite.BackSprite();
             }
@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && IsOnGround() && !isSpindashing)
 
         {
-            
+
             playerRigidbody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
             playerSprite.JumpSprite();
             int randomIndex = Random.Range(0, JumpVoices.Length);
@@ -115,9 +115,8 @@ public class PlayerController : MonoBehaviour
 
             playerRigidbody.velocity *= 0.9f;
 
-            spanimator.enabled = true;
-            spanimator.SetTrigger("spinAnimation");
-            Debug.Log("RECARGANDO SPINDASH");
+            playerAnimator.enabled = true;
+            playerAnimator.SetTrigger("spinAnimation");
 
             spindashCoroutine = StartCoroutine(SpindashCooldown());
 
@@ -129,7 +128,7 @@ public class PlayerController : MonoBehaviour
                 playerSprite.SpindashSprite();
                 int randomIndex = Random.Range(0, SpindashVoices.Length);
                 playerAudioSource.PlayOneShot(SpindashVoices[randomIndex], 1);
-                
+
             }
             playerAudioSource.PlayOneShot(Spindashsound, 0.5f);
         }
@@ -142,7 +141,6 @@ public class PlayerController : MonoBehaviour
 
             StopCoroutine(spindashCoroutine);
             gameManager.ResetSpindash(0f);
-            Debug.Log("SPINDASH INICIADO");
 
             if (spindashParticleSystem.isPlaying)
             {
@@ -151,8 +149,8 @@ public class PlayerController : MonoBehaviour
                 spindashParticleSystem.gameObject.SetActive(false);
             }
             playerAudioSource.Stop();
-            spanimator.SetTrigger("spinStop");
-            spanimator.enabled = false;
+            playerAnimator.SetTrigger("spinStop");
+            playerAnimator.enabled = false;
             playerAudioSource.PlayOneShot(boostsound, 0.5f);
         }
     }
@@ -161,7 +159,6 @@ public class PlayerController : MonoBehaviour
     {
         spindashVelocity = 0;
         gameManager.SetSpindash(spindashVelocity);
-        Debug.Log("SPINDASH: " + spindashVelocity + " / 200");
 
         for (int i = 0; i < 5; i++)
         {
@@ -169,7 +166,6 @@ public class PlayerController : MonoBehaviour
 
             spindashVelocity += 40;
             gameManager.SetSpindash(spindashVelocity);
-            Debug.Log("SPINDASH: " + spindashVelocity + " / 200");
         }
     }
 

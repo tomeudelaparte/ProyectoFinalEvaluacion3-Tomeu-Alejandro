@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8240977456127598060}
   - component: {fileID: 8095479803197127042}
   m_Layer: 0
-  m_Name: pot_break
+  m_Name: Pot_break
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ ParticleSystem:
   serializedVersion: 7
   lengthInSec: 5
   simulationSpeed: 5
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}

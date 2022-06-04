@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6209851055780936396}
   - component: {fileID: -9167339078004343866}
   m_Layer: 0
-  m_Name: santorini_tower
+  m_Name: Santorini_tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

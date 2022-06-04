@@ -14,6 +14,6 @@ public class Framerate : MonoBehaviour
         fps = 1.0f / deltaTime;
 
         // Mathf.Ceil - Devuelve el entero mayor o igual más próximo a un número dado.
-        gameObject.GetComponent<TextMeshProUGUI>().text = Mathf.Ceil(fps).ToString();
+        gameObject.GetComponent<TextMeshProUGUI>().text = Mathf.Clamp(Mathf.Ceil(fps), 0, 200).ToString();
     }
 }

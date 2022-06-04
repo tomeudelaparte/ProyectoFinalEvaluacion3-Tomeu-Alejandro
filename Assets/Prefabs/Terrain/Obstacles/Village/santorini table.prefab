@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 221662968601757718}
   - component: {fileID: 6415763881689625696}
   m_Layer: 0
-  m_Name: santorini table
+  m_Name: Santorini table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
