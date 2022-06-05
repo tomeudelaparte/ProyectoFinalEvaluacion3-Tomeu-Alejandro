@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class RealtimeCam : MonoBehaviour
+public class RealTimeCam1 : MonoBehaviour
 {
     public Sprite[] playerSprites;
 
@@ -73,4 +72,6 @@ public class RealtimeCam : MonoBehaviour
     {
         ChangeSprite(5);
     }
+
+    
 }
