@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     private GameManager gameManager;
-
+    
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();

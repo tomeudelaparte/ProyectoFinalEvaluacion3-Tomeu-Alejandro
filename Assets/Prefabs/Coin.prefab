@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 4193332313379876121}
   - component: {fileID: 4193332313379876122}
   - component: {fileID: 4193332313379876123}
-  - component: {fileID: 4193332313379876124}
-  - component: {fileID: 1580649719}
   m_Layer: 0
   m_Name: coin
   m_TagString: Untagged
@@ -103,31 +101,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4193332313379876124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4193332313379876126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab2a10981d1e9bb468c59a23323f36cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &1580649719
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4193332313379876126}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.15, y: 0.15, z: 0.05}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4193332313699773861
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +110,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4193332313699773860}
+  - component: {fileID: 8106451693281619896}
+  - component: {fileID: 7607302043237335587}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Item
@@ -159,3 +134,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8106451693281619896
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193332313699773861}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.2, z: 0.05}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7607302043237335587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193332313699773861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2a10981d1e9bb468c59a23323f36cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject optionsMenu;
     public GameObject userInterface;
+    public GameObject map;
 
     [Header("AUDIO SYSTEM")]
     public GameObject audioSystem;
@@ -110,7 +111,7 @@ public class GameManager : MonoBehaviour
             userInterface.SetActive(true);
             pauseMenu.SetActive(false);
             optionsMenu.SetActive(false);
-
+            map.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
         }
     }

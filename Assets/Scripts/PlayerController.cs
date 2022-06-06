@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("PARTICLES")]
     public ParticleSystem spindashParticleSystem;
+    public ParticleSystem waterParticleSystem;
 
     [Header("AUDIO CLIPS")]
     public AudioClip[] JumpVoices;
@@ -202,6 +203,27 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Item"))
         {
             playerAudioSource.PlayOneShot(ItemGetSound, 0.7f);
+        }
+
+      
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Water"))
+        {
+            waterParticleSystem.gameObject.SetActive(true);
+            waterParticleSystem.Play();
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+
+        if (other.gameObject.CompareTag("Water"))
+        {
+            
+            waterParticleSystem.Stop();
+            waterParticleSystem.gameObject.SetActive(false);
         }
     }
     // DETECTA EL SUELO
