@@ -33,11 +33,12 @@ public class GameManager : MonoBehaviour
     private AudioSource[] audioSource;
     private DataPersistence dataPersistence;
 
-    private bool isGameOver = false;
-    private bool isPaused = false;
-
+    [Header("GAME MANAGER")]
     private int totalItems = 0;
     private int itemsCollected = 0;
+
+    private bool isGameOver = false;
+    private bool isPaused = false;
 
     private float time, minutes, seconds, miliseconds;
 
@@ -53,6 +54,9 @@ public class GameManager : MonoBehaviour
 
         totalPilas.text = totalItems.ToString();
         collectedPilas.text = itemsCollected.ToString();
+
+        userInterface.SetActive(true);
+        pauseMenu.SetActive(false);
 
         playerSpawn();
     }
@@ -105,13 +109,14 @@ public class GameManager : MonoBehaviour
 
             Time.timeScale = 1;
 
-            audioSource[0].Play();
-            audioSource[1].Pause();
-
             userInterface.SetActive(true);
             pauseMenu.SetActive(false);
             optionsMenu.SetActive(false);
             map.SetActive(false);
+
+            audioSource[0].Play();
+            audioSource[1].Pause();
+
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
@@ -207,6 +212,7 @@ public class GameManager : MonoBehaviour
     {
         sliderUI.value = spin;
     }
+
     public void ResetSpindash(float spin)
     {
         sliderUI.value = 0;

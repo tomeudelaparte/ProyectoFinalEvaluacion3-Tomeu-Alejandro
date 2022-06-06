@@ -4,34 +4,28 @@ using UnityEngine;
 
 public class Breakable_items : MonoBehaviour
 {
+    private AudioSource potAudioSource;
+    private bool isDestroyed = false;
+
     public ParticleSystem potParticleSystem;
     public AudioClip potbreak;
-    public AudioSource PotAudiosource;
-
-    private bool isDestroyed = false;
 
     void Start()
     {
-        PotAudiosource = GetComponent<AudioSource>();
+        potAudioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider otherCollider)
     {
-
-        //Adios pot
-
         if (!isDestroyed)
         {
             isDestroyed = true;
 
-            Vector3 offset = new Vector3(0, 0f, 0);
-            var potBreak = Instantiate(potParticleSystem,
-                transform.position + offset,
-                potParticleSystem.transform.rotation);
+            ParticleSystem potBreak = Instantiate(potParticleSystem, transform.position, potParticleSystem.transform.rotation);
 
             potBreak.Play();
 
-            PotAudiosource.PlayOneShot(potbreak);
+            potAudioSource.PlayOneShot(potbreak);
 
             StartCoroutine(DestroyEvent());
         }
@@ -39,7 +33,6 @@ public class Breakable_items : MonoBehaviour
 
     private IEnumerator DestroyEvent()
     {
-
         GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 0);
 
         yield return new WaitForSeconds(3f);

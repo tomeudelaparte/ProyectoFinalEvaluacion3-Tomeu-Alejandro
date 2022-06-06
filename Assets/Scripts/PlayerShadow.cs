@@ -6,20 +6,22 @@ public class PlayerShadow : MonoBehaviour
 {
     public GameObject player;
 
+    private Vector3 hitDataPoint;
+    private float groundDistance;
+
     void Update()
     {
-
         if (Physics.Raycast(player.transform.position, Vector3.down, out RaycastHit hitData, 50))
         {
-            Vector3 temp = hitData.point;
+            hitDataPoint = hitData.point;
 
-            temp.y += 0.1f;
+            hitDataPoint.y += 0.1f;
 
-            transform.position = temp;
+            transform.position = hitDataPoint;
 
-            float distance = transform.position.y - player.transform.position.y;
+            groundDistance = transform.position.y - player.transform.position.y;
 
-            transform.localScale = Vector3.one * -distance;
+            transform.localScale = Vector3.one * -groundDistance;
         }
     }
 }

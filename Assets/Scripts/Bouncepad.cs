@@ -4,25 +4,26 @@ using UnityEngine;
 
 public class Bouncepad : MonoBehaviour
 {
-    public float power = 20f;
     private Animator animator;
+    private AudioSource bounceAudioSource;
 
-    public AudioSource BounceAudioSource;
+    public float power = 20f;
     public AudioClip bouncesound;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
 
-        BounceAudioSource = GetComponent<AudioSource>();
+        bounceAudioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         animator.SetTrigger("Playertouch");
+
         Rigidbody playerRigidbody = other.gameObject.GetComponent<Rigidbody>();
         playerRigidbody.AddForce(Vector3.up * power, ForceMode.Impulse);
 
-        BounceAudioSource.PlayOneShot(bouncesound, 0.7f);
+        bounceAudioSource.PlayOneShot(bouncesound, 0.7f);
     }
 }

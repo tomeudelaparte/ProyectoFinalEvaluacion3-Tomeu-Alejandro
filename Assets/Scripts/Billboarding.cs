@@ -5,24 +5,15 @@ using UnityEngine;
 public class Billboarding : MonoBehaviour
 {
     private GameObject focalPoint;
-    private bool useStaticBillboard;
 
     void Start()
     {
         focalPoint = GameObject.Find("FocalPoint");
     }
 
-    void LateUpdate()
+    void Update()
     {
-        if (!useStaticBillboard)
-        {
-            transform.LookAt(focalPoint.transform);
-        }
-        else
-        {
-            transform.rotation = focalPoint.transform.rotation;
-        }
-
+        transform.LookAt(focalPoint.transform);
         transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
     }
 }

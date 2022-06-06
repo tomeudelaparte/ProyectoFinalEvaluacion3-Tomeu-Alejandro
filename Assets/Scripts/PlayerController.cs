@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
-
 {
+    [Header("PLAYER")]
     private GameManager gameManager;
 
     private AudioSource playerAudioSource;
     private Rigidbody playerRigidbody;
     private Animator playerAnimator;
     private PlayerSprite playerSprite;
+    private RealTimeCam realTimeCam;
     private GameObject focalPoint;
 
     private float horizontalInput, verticalInput;
@@ -19,11 +20,10 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayerMask;
 
     [Header("VALUES")]
-    public float speed = 10f;
-    public float impulse = 5F;
-    public float groundDistance = 2f;
-    public float speedRotation = 10f;
-    public float velocityMax = 100f;
+    private float speed = 100f;
+    private float impulse = 50f;
+    private float groundDistance = 2f;
+    private float velocityMax = 150f;
 
     [Header("PARTICLES")]
     public ParticleSystem spindashParticleSystem;
@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
     private bool isSpindashing = false;
     private Coroutine spindashCoroutine = null;
 
-
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -50,18 +49,26 @@ public class PlayerController : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
         playerSprite = FindObjectOfType<PlayerSprite>();
+        realTimeCam = FindObjectOfType<RealTimeCam>();
         playerAudioSource = GetComponent<AudioSource>();
 
         focalPoint = GameObject.Find("FocalPoint");
 
-        spindashParticleSystem.Stop();
-
         playerAnimator.enabled = false;
-
         playerSprite.IdleSprite();
+        realTimeCam.IdleSprite();
     }
 
     void Update()
+    {
+        PlayerActionPose();
+
+        ActionJump();
+        ActionStomp();
+        ActionSpindash();
+    }
+
+    private void PlayerActionPose()
     {
         if (IsOnGround() && !isSpindashing)
         {
@@ -69,11 +76,13 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 playerSprite.IdleSprite();
+                realTimeCam.IdleSprite();
             }
 
             if (Input.GetKey(KeyCode.A))
             {
                 playerSprite.LeftSprite();
+                realTimeCam.LeftSprite();
             }
 
             if (Input.GetKey(KeyCode.S))
@@ -84,33 +93,39 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.D))
             {
                 playerSprite.RightSprite();
+                realTimeCam.RightSprite();
             }
         }
-        //Jump sprite aparece
+    }
 
-
-        //Jump
+    private void ActionJump()
+    {
         if (Input.GetKeyDown(KeyCode.Space) && IsOnGround() && !isSpindashing)
-
         {
-
             playerRigidbody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
+
             playerSprite.JumpSprite();
+            realTimeCam.JumpSprite();
+
             int randomIndex = Random.Range(0, JumpVoices.Length);
             playerAudioSource.PlayOneShot(JumpVoices[randomIndex], 1);
-            playerAudioSource.PlayOneShot(JumpVoices[randomIndex], 0.5f);
             playerAudioSource.PlayOneShot(jumpsound, 0.7f);
         }
+    }
 
-        //Stomp
+    private void ActionStomp()
+    {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             playerRigidbody.AddForce(Vector3.down * 100f, ForceMode.Impulse);
 
             playerSprite.StompSprite();
+            realTimeCam.StompSprite();
         }
+    }
 
-        //Spindash
+    private void ActionSpindash()
+    {
         if (Input.GetKeyDown(KeyCode.Mouse1) && !isSpindashing)
         {
             isSpindashing = true;
@@ -120,19 +135,20 @@ public class PlayerController : MonoBehaviour
             playerAnimator.enabled = true;
             playerAnimator.SetTrigger("spinAnimation");
 
-            spindashCoroutine = StartCoroutine(SpindashCooldown());
+            spindashCoroutine = StartCoroutine(SpindashCharging());
 
             if (!spindashParticleSystem.isPlaying)
             {
-                spindashParticleSystem.gameObject.SetActive(true);
-
-                spindashParticleSystem.Play();
                 playerSprite.SpindashSprite();
+                realTimeCam.SpindashSprite();
+
+                spindashParticleSystem.gameObject.SetActive(true);
+                spindashParticleSystem.Play();
+
                 int randomIndex = Random.Range(0, SpindashVoices.Length);
                 playerAudioSource.PlayOneShot(SpindashVoices[randomIndex], 1);
-
+                playerAudioSource.PlayOneShot(Spindashsound, 0.5f);
             }
-            playerAudioSource.PlayOneShot(Spindashsound, 0.5f);
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse1) && isSpindashing)
@@ -141,23 +157,25 @@ public class PlayerController : MonoBehaviour
 
             playerRigidbody.AddForce(focalPoint.transform.forward * spindashVelocity, ForceMode.VelocityChange);
 
-            StopCoroutine(spindashCoroutine);
             gameManager.ResetSpindash(0f);
+
+            playerAnimator.enabled = false;
+            playerAudioSource.PlayOneShot(boostsound, 0.5f);
+
+            StopCoroutine(spindashCoroutine);
 
             if (spindashParticleSystem.isPlaying)
             {
-                spindashParticleSystem.Stop();
                 playerSprite.IdleSprite();
+                realTimeCam.IdleSprite();
+
+                spindashParticleSystem.Stop();
                 spindashParticleSystem.gameObject.SetActive(false);
             }
-            playerAudioSource.Stop();
-            playerAnimator.SetTrigger("spinStop");
-            playerAnimator.enabled = false;
-            playerAudioSource.PlayOneShot(boostsound, 0.5f);
         }
     }
 
-    private IEnumerator SpindashCooldown()
+    private IEnumerator SpindashCharging()
     {
         spindashVelocity = 0;
         gameManager.SetSpindash(spindashVelocity);
@@ -195,6 +213,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             playerSprite.IdleSprite();
+            realTimeCam.IdleSprite();
         }
     }
 
@@ -204,8 +223,6 @@ public class PlayerController : MonoBehaviour
         {
             playerAudioSource.PlayOneShot(ItemGetSound, 0.7f);
         }
-
-      
     }
 
     private void OnTriggerStay(Collider other)
@@ -218,10 +235,8 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-
         if (other.gameObject.CompareTag("Water"))
         {
-            
             waterParticleSystem.Stop();
             waterParticleSystem.gameObject.SetActive(false);
         }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DataPersistence : MonoBehaviour
 {
-
     // Devuelve un int mediante una key proporcionada
     public int GetInt(string key)
     {

@@ -10,7 +10,7 @@ public class PlayerSprite : MonoBehaviour
 
     public Sprite[] playerSprites;
 
-    void LateUpdate()
+    void Update()
     {
         transform.LookAt(focalPoint.transform);
 

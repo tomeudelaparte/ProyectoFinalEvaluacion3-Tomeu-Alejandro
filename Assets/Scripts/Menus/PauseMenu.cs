@@ -12,11 +12,6 @@ public class PauseMenu : MonoBehaviour
         gameManagerScript = FindObjectOfType<GameManager>();
     }
 
-    void Update()
-    {
-        
-    }
-
     public void Resume()
     {
         gameManagerScript.Pause();

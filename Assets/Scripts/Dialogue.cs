@@ -13,6 +13,7 @@ public class Dialogue : MonoBehaviour
             canvas.SetActive(true);
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -20,5 +21,4 @@ public class Dialogue : MonoBehaviour
             canvas.SetActive(false);
         }
     }
-
 }

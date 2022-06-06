@@ -125,7 +125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   potParticleSystem: {fileID: 8240977456127598060, guid: fac04e0001e39ce4daf9831e42d04364, type: 3}
   potbreak: {fileID: 8300000, guid: 5f2b5fd628dda3344b9716d98b470b1c, type: 3}
-  PotAudiosource: {fileID: 7710059247749696240}
 --- !u!82 &7710059247749696240
 AudioSource:
   m_ObjectHideFlags: 0
@@ -135,7 +134,7 @@ AudioSource:
   m_GameObject: {fileID: 9078045849949441331}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2061826522585083865, guid: 0a5af4ad9ad8ca84daec4da95580ace4, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
