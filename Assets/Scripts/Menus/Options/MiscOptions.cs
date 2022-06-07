@@ -15,7 +15,6 @@ public class MiscOptions : MonoBehaviour
     [Header("DEFAULT SETTINGS")]
     private bool tutorialSkipIsOn = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         dataPersistence = FindObjectOfType<DataPersistence>();
@@ -23,23 +22,29 @@ public class MiscOptions : MonoBehaviour
         LoadSavedSettings();
     }
 
+    // Carga las opciones
     private void LoadSavedSettings()
     {
         GetTutorialSkip();
     }
 
+    // Obtiene la opcion TutorialSkip
     private void GetTutorialSkip()
     {
+        // Si no existe, guarda un valor predeterminado
         if (!dataPersistence.HasKey("TUTORIAL SKIP"))
         {
             SetTutorialSkip(tutorialSkipIsOn);
         }
 
+        // Obtiene el valor guardado
         tutorialSkipUI.isOn = dataPersistence.GetBool("TUTORIAL SKIP");
     }
 
+    // Setea la opcion TutorialSkip
     public void SetTutorialSkip(bool isOn)
     {
+        // Guarda la opcion
         dataPersistence.SetBool("TUTORIAL SKIP", isOn);
     }
 

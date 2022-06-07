@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("VALUES")]
     private float speedForce = 100f;
-    private float impulseForce = 50f;
+    private float jumpForce = 60f;
     private float stompForce = 100f;
     private float groundDistance = 2f;
     private float velocityMax = 150f;
@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && IsOnGround() && !isSpindashing)
         {
             // Aplica una fuerza, un impulso vertical hacia arriba
-            playerRigidbody.AddForce(Vector3.up * impulseForce, ForceMode.Impulse);
+            playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
             // Cambia la pose del personaje y la pose de la interfaz
             playerSprite.JumpSprite();

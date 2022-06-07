@@ -16,9 +16,11 @@ public class GameOver : MonoBehaviour
     {
         dataPersistence = FindObjectOfType<DataPersistence>();
 
+        // Obtiene el mejor tiempo y el actual
         currentTime.text = dataPersistence.GetString("Current Time");
         bestTime.text = dataPersistence.GetString("Best Time");
 
+        // Desbloquea el raton
         Cursor.lockState = CursorLockMode.None;
     }
 }

@@ -9,7 +9,6 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        // Obtiene la componente necesaria
         gameManagerScript = FindObjectOfType<GameManager>();
     }
 
@@ -20,12 +19,16 @@ public class PauseMenu : MonoBehaviour
     }
 
 
+    // Carga la escena Main menu
     public void ExitToMenu(string sceneName)
     {
+        // Reanuda el tiempo
         Time.timeScale = 1;
 
+        // Desbloquea el raton
         Cursor.lockState = CursorLockMode.None;
 
+        // Carga la escena
         SceneManager.LoadScene(sceneName);
     }
 }
