@@ -6,38 +6,45 @@ public class RealTimeCam : MonoBehaviour
 {
     public Sprite[] playerSprites;
 
+    // Cambia el sprite segun el index en la componente Image
     private void ChangeSprite(int index)
     {
         GetComponent<Image>().sprite = playerSprites[index];
     }
 
+    // Pose predeterminada
     public void IdleSprite()
     {
         ChangeSprite(0);
     }
 
-    public void SpindashSprite()
+    // Pose izquierda
+    public void LeftSprite()
     {
-        ChangeSprite(1);
+        ChangeSprite(5);
     }
 
-    public void StompSprite()
-    {
-        ChangeSprite(2);
-    }
-
-    public void JumpSprite()
-    {
-        ChangeSprite(3);
-    }
-
+    // Pose derecha
     public void RightSprite()
     {
         ChangeSprite(4);
     }
 
-    public void LeftSprite()
+    // Pose salto
+    public void JumpSprite()
     {
-        ChangeSprite(5);
+        ChangeSprite(3);
+    }
+
+    // Pose spindash
+    public void SpindashSprite()
+    {
+        ChangeSprite(1);
+    }
+
+    // Pose pisoton
+    public void StompSprite()
+    {
+        ChangeSprite(2);
     }
 }

@@ -9,13 +9,16 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
+        // Obtiene la componente necesaria
         gameManagerScript = FindObjectOfType<GameManager>();
     }
 
+    // Desactiva la pausa del juego
     public void Resume()
     {
         gameManagerScript.Pause();
     }
+
 
     public void ExitToMenu(string sceneName)
     {

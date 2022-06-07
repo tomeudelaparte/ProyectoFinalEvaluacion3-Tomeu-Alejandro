@@ -12,31 +12,39 @@ public class Breakable_items : MonoBehaviour
 
     void Start()
     {
+        // Obtiene la componente necesaria
         potAudioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider otherCollider)
     {
+        // Si NO esta roto
         if (!isDestroyed)
         {
+            // Destroyed toma valor TRUE
             isDestroyed = true;
 
-            ParticleSystem potBreak = Instantiate(potParticleSystem, transform.position, potParticleSystem.transform.rotation);
+            // Instancia el sistema de particulas de destruccion
+            Instantiate(potParticleSystem, transform.position, potParticleSystem.transform.rotation);
 
-            potBreak.Play();
-
+            // Reproduce un sonido predeterminado
             potAudioSource.PlayOneShot(potbreak);
 
+            // Empieza una COROUTINE
             StartCoroutine(DestroyEvent());
         }
     }
 
+    // Destruye el GameObject con retardo
     private IEnumerator DestroyEvent()
     {
+        // Cambia la transpariencia del color de la componente SpriteRenderer
         GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 0);
 
+        // Espera 3 segundos
         yield return new WaitForSeconds(3f);
 
+        // Destruye el GameObject
         Destroy(gameObject);
     }
 }

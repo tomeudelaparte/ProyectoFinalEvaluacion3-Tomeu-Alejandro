@@ -9,8 +9,10 @@ public class PlayerParticles : MonoBehaviour
 
     void Update()
     {
+        // Sigue la posicion del player
         gameObject.transform.position = player.transform.position;
 
+        // Mira en direccion al player
         transform.LookAt(focalPoint.transform.position);
     }
 }

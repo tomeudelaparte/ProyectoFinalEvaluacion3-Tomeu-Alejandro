@@ -8,15 +8,19 @@ public class Item : MonoBehaviour
 
     void Start()
     {
+        // Obtiene la componente necesaria
         gameManager = FindObjectOfType<GameManager>();
     }
 
     private void OnTriggerEnter(Collider otherCollider)
     {
+        // Si al entrar como PLAYER
         if (otherCollider.CompareTag("Player"))
         {
+            // Actualiza el contador de monedas
             gameManager.UpdateScore();
 
+            // Destruye la moneda
             Destroy(gameObject);
         }
     }
